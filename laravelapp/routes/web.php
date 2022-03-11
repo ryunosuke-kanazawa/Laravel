@@ -23,8 +23,12 @@ Route::get('hello', function () {
 Route::get('hello', 'HelloController@index');
 Route::post('hello', 'HelloController@post');
 
-//問題1
+//jissyu2
 Route::get('jissyu2', 'jissyu2@index');
 
-//問題1,2
+//jissyu3_1
 Route::get('jissyu3', 'jissyu3_1Controller@index');
+
+//jissyu4_1
+Route::get('jissyu6', 'jissyu4_1Controller@index');
+Route::post('jissyu6', 'web.php@post');

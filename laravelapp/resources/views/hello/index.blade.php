@@ -15,10 +15,13 @@
     <form action="/hallo" method="post">
         <table>
             @csrf
-            @error('name')
-            <tr><th>ERROR</th>
-            <td>{{$message}}</td></tr>
-            @enderror
+            @if ($errors->has('msg'))
+            <tr><th>ERROR</th><td>{{$errors->first('msg')}}</td></tr>
+            @endif
+            <tr><th>Message: </th><td><input type="text" name="msg" value="{{old(msg)}}"></td></tr>
+            <tr><th></th><td><input type="submit" value="send"></td></tr>
+        </table>
+    </form>
 
 @sectiion('footer')
     copyright 2020 tuyano.
