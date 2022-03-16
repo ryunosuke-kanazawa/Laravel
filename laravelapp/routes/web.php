@@ -22,6 +22,9 @@ Route::get('hello', function () {
 
 Route::get('hello', 'HelloController@index');
 Route::post('hello', 'HelloController@post');
+Route::get('hello/add', 'HelloController@add');
+Route::post('hello/add', 'HelloController@create');
+Route::get('hello/show', 'HelloController@show');
 
 //jissyu2
 Route::get('jissyu2', 'jissyu2@index');
