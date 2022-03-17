@@ -25,6 +25,9 @@ Route::post('hello', 'HelloController@post');
 Route::get('hello/add', 'HelloController@add');
 Route::post('hello/add', 'HelloController@create');
 Route::get('hello/show', 'HelloController@show');
+Route::get('person', 'PersonController@index');
+Route::get('person/find', 'PersonController@find');
+Route::post('person/find', 'PersonController@search');
 
 //jissyu2
 Route::get('jissyu2', 'jissyu2@index');
