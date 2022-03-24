@@ -20,7 +20,8 @@ Route::get('hello', function () {
     return view('hello.index');
 });
 
-Route::get('hello', 'HelloController@index');
+Route::get('hello', 'HelloController@index')
+    ->middleware('auth');
 Route::post('hello', 'HelloController@post');
 Route::get('hello/add', 'HelloController@add');
 Route::post('hello/add', 'HelloController@create');
@@ -41,7 +42,8 @@ Route::resource('rest', 'RestappController');
 Route::get('hello/rest', 'HelloController@rest');
 Route::get('hello/session', 'HelloController@ses_get');
 Route::post('hello/session', 'HelloController@ses_put');
-
+Route::get('hello/auth', 'HelloController@getAuth');
+Route::post('hello/auth', 'HelloController@postAuth');
 
 //jissyu2
 Route::get('jissyu2', 'jissyu2@index');
@@ -52,3 +54,7 @@ Route::get('jissyu3', 'jissyu3_1Controller@index');
 //jissyu4_1
 Route::get('jissyu6', 'jissyu4_1Controller@index');
 Route::post('jissyu6', 'web.php@post');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
