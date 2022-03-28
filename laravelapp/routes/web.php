@@ -11,6 +11,7 @@
 |
 */
 use App\Http\Middleware\HelloMiddleware;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,6 +45,9 @@ Route::get('hello/session', 'HelloController@ses_get');
 Route::post('hello/session', 'HelloController@ses_put');
 Route::get('hello/auth', 'HelloController@getAuth');
 Route::post('hello/auth', 'HelloController@postAuth');
+
+//効果測定
+Route::resource('/todos', 'TodoController');
 
 //jissyu2
 Route::get('jissyu2', 'jissyu2@index');
