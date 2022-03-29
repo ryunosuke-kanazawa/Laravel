@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Todo;
 
 class TodoController extends Controller
 {
@@ -13,17 +14,11 @@ class TodoController extends Controller
      */
     public function index()
     {
-        return view('todos.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        //期限が近いものから順に表示する。期限がないものは最後にもっていく。
+        $todos = Todo::orderByRaw('"deadline" IS NULL ASC')->orderBy('deadline')->get();
+        return view('todos.index',[
+            'todos' => $todos,
+        ]);
     }
 
     /**
@@ -34,18 +29,21 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            /*・Todoは必ず入力
+              ・Todoは100文字以上入力できない
+              ・期限の入力は必須ではない
+              ・期限に過去の日付は設定できない*/ 
+            'newTodo'=>'required|max:100',
+            'newDeadline'=>'nullable|after:"now"'
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        //DBに保存
+        Todo::create([
+            'todo' => $request->newTodo,
+            'deadline' => $request->newDeadline,
+        ]);
+        return redirect()->route('todos.index');
     }
 
     /**
@@ -56,7 +54,10 @@ class TodoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $todo = Todo::find($id);
+        return view('todos.edit', [
+            'todo' => $todo,
+        ]);
     }
 
     /**
@@ -68,7 +69,17 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'updateTodo' => 'required|max:100',
+            'updateDeadline' => 'nullable|after:"now"',
+        ]);
+        $todo = Todo::find($id);
+
+        $todo->todo = $request->updateTodo;
+        $todo->deadline = $request->updateDeadline;
+
+        $todo->save();
+        return redirect()->route('todos.index');
     }
 
     /**
@@ -79,6 +90,8 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $todo = Todo::find($id);
+        $todo->delete();
+        return redirect()->route('todos.index');
     }
 }

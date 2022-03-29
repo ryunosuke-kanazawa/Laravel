@@ -15,12 +15,19 @@
             {!! Form::open(['route' => 'todos.store', 'method' => 'POST']) !!}
             {{ csrf_field() }}
                 <div class="row">
-                    {{ Form::text('newTodo', null, ['class' => 'form-control col-8 mr-5']) }}
-                    {{ Form::date('newDeadline', null, ['class' => 'mr-5']) }}
-                    {{ Form::submit('新規追加', ['class' => 'btn btn-primary']) }}
+                    {{Form::text('newTodo', null, ['class' => 'form-control col-8 mr-5'])}}
+                    {{Form::date('newDeadline', null, ['class' => 'mr-5'])}}
+                    {{Form::submit('新規追加', ['class' => 'btn btn-primary'])}}
                 </div>
             {!! Form::close() !!}
         </div>
+
+        @if ($errors->has('newTodo'))
+            <p class="alert alert-danger">{{$errors->first('newTodo')}}</p>
+        @endif
+        @if ($errors->has('newDeadline'))
+            <p class="alert alert-danger">{{$errors->first('newDeadline')}}</p>
+        @endif
 
         <table class="table">
             <thead>
@@ -32,24 +39,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row" class="todo">やること</th>
-                    <td>2022年9月6日</td>
-                    <td><a href="" class="btn btn-primary">編集</a></td>
-                    <td>{{ Form::submit('削除', ['class' => 'btn btn-danger']) }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">やることやることやることやることやることやることやることやることやることやることやることやることやることやることやることやることやることやることやることやることやることやること</th>
-                    <td>2020年9月7日</td>
-                    <td><a href="" class="btn btn-primary">編集</a></td>
-                    <td>{{ Form::submit('削除', ['class' => 'btn btn-danger']) }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">やることやること</th>
-                    <td>2022年9月8日</td>
-                    <td><a href="" class="btn btn-primary">編集</a></td>
-                    <td>{{ Form::submit('削除', ['class' => 'btn btn-danger']) }}</td>
-                </tr>
+            @foreach ($todos as $todo)
+                    <tr>
+                        <th scope="row" class="todo">{{ $todo->todo }}</th>
+                        <td>{{ $todo->deadline }}</td>
+                        <td><a href="" class="btn btn-primary">編集</a></td>
+                        <td>{{ Form::submit('削除', ['class' => 'btn btn-danger']) }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
