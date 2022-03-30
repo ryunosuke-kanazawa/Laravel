@@ -46,8 +46,9 @@ Route::post('hello/session', 'HelloController@ses_put');
 Route::get('hello/auth', 'HelloController@getAuth');
 Route::post('hello/auth', 'HelloController@postAuth');
 
-//効果測定
-Route::resource('/todos', 'TodoController');
+//効果測定(課題制作)
+Route::resource('/todos', 'TodoController')
+    ->middleware('auth');
 
 //jissyu2
 Route::get('jissyu2', 'jissyu2@index');

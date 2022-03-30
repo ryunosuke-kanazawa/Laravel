@@ -40,13 +40,17 @@
             </thead>
             <tbody>
             @foreach ($todos as $todo)
-                    <tr>
-                        <th scope="row" class="todo">{{ $todo->todo }}</th>
-                        <td>{{ $todo->deadline }}</td>
-                        <td><a href="" class="btn btn-primary">編集</a></td>
+                <tr>
+                    <th scope="row" class="todo">{{ $todo->todo }}</th>
+                    <td>{{ $todo->deadline }}</td>
+                    <td><a href="{{ route('todos.edit', $todo->id) }}" class="btn btn-primary">編集</a></td>
+                    {!! Form::open(['route' => ['todos.destroy', $todo->id], 'method' => 'POST']) !!}
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
                         <td>{{ Form::submit('削除', ['class' => 'btn btn-danger']) }}</td>
-                    </tr>
-                @endforeach
+                    {!! Form::close() !!}
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>

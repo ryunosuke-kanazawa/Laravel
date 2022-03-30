@@ -20,5 +20,5 @@
 @endsection
 
 @endsection('footer')
-copyright 2020 tuyano.
+copyright 2022 ohara.
 @endsection
